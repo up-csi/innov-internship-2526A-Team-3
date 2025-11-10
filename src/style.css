@@ -1,0 +1,27 @@
+@import 'tailwindcss';
+
+.letter-box {
+    @apply m-1 flex h-12 w-12 items-center justify-center rounded-sm border-2 border-gray-500 text-2xl font-extrabold uppercase;
+}
+
+.filled-box {
+    @apply border-black;
+}
+
+.keyboard-button {
+    @apply mx-0.5 min-w-8 cursor-pointer border border-gray-400 px-2 py-1 text-base font-bold uppercase;
+}
+
+#game-board {
+    @apply flex flex-col items-center;
+}
+
+#keyboard-cont {
+    @apply my-4 flex flex-col items-center;
+}
+
+.keyboard-row {
+    @apply mb-2 flex;
+}
+
+/* ADD NEW CLASS STYLES BELOW */

@@ -1,0 +1,43 @@
+{
+    "name": "innov-internship-2526A",
+    "version": "1.0.0",
+    "description": "",
+    "type": "module",
+    "main": "index.js",
+    "scripts": {
+        "dev": "vite",
+        "build": "vite build",
+        "preview": "vite preview",
+        "fmt": "prettier --check .",
+        "fmt:fix": "prettier --write .",
+        "lint": "pnpm -r run lint:html & pnpm -r run lint:css & pnpm -r run lint:js",
+        "lint:html": "linthtml src/**/*.html",
+        "lint:css": "stylelint src/**/*.css",
+        "lint:js": "eslint src/**/*.js"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "packageManager": "pnpm@10.20.0",
+    "devDependencies": {
+        "@eslint/js": "^9.25.1",
+        "@linthtml/linthtml": "^0.10.2",
+        "@linthtml/linthtml-config-recommended": "^0.2.0",
+        "@tailwindcss/vite": "^4.1.4",
+        "eslint": "^9.25.1",
+        "eslint-config-prettier": "^10.1.2",
+        "globals": "^16.0.0",
+        "prettier": "^3.5.3",
+        "prettier-plugin-tailwindcss": "^0.6.11",
+        "stylelint": "^16.19.1",
+        "stylelint-config-standard": "^38.0.0",
+        "stylelint-config-tailwindcss": "^1.0.0",
+        "tailwindcss": "^4.1.4",
+        "vite": "^6.3.3"
+    },
+    "pnpm": {
+        "onlyBuiltDependencies": [
+            "esbuild"
+        ]
+    }
+}
