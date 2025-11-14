@@ -52,20 +52,42 @@ function checkGuess() {
         return;
     }
 
+    // Count number of occurences of each letter in the correct word
+    const letterCount = {};
+    for (const letter of rightGuess) {
+        if (letterCount[letter]) {
+            letterCount[letter]++;
+        } else {
+            letterCount[letter] = 1;
+        }
+    }
+
+    // Iterate and find out the bg color of each letter of the currentGuess
+    // Check the letters that match with the rightGuessString
+    const currentGuessLetterColors = new Array(WORD_LENGTH).fill('');
     for (let i = 0; i < WORD_LENGTH; i++) {
-        let letterColor = '';
+        if (currentGuess[i] === rightGuess[i]) {
+            currentGuessLetterColors[i] = 'green';
+            letterCount[currentGuess[i]]--;
+        }
+    }
+
+    // Check the wrong letters and those that are in the wrong position/duplicates
+    for (let i = 0; i < WORD_LENGTH; i++) {
+        if (currentGuessLetterColors[i] === '') {
+            if (letterCount[currentGuess[i]]) {
+                currentGuessLetterColors[i] = 'yellow';
+                letterCount[currentGuess[i]]--;
+            } else {
+                currentGuessLetterColors[i] = 'grey';
+            }
+        }
+    }
+
+    for (let i = 0; i < WORD_LENGTH; i++) {
+        const letterColor = currentGuessLetterColors[i];
         const box = row.children[i];
         const letter = currentGuess[i];
-
-        const letterPosition = rightGuess.indexOf(currentGuess[i]);
-        // is letter in the correct guess
-        if (letterPosition === -1) {
-            letterColor = 'grey';
-        } else if (currentGuess[i] === rightGuess[i]) {
-            letterColor = 'green';
-        } else {
-            letterColor = 'yellow';
-        }
 
         const delay = 50 * i;
         setTimeout(() => {
