@@ -38,6 +38,11 @@ function deleteLetter() {
     nextLetter -= 1;
 }
 
+function checkValidity() {
+    const word = currentGuess.join('');
+    return (WORDS.includes(word));
+}
+
 function checkGuess() {
     const row = document.getElementsByClassName('letter-row')[6 - guessesRemaining];
     let guessString = '';
@@ -45,6 +50,11 @@ function checkGuess() {
 
     for (const val of currentGuess) {
         guessString += val;
+    }
+
+    if (!checkValidity()) {
+        alert('Invalid word!');
+        return;
     }
 
     if (guessString.length !== WORD_LENGTH) {
