@@ -27,6 +27,11 @@ function initBoard() {
 function shadeKeyBoard(letter, color) {
     for (const elem of document.getElementsByClassName('keyboard-button')) {
         if (elem.textContent === letter) {
+            if (elem.style.backgroundColor === 'green') {
+                break;
+            } else if (elem.style.backgroundColor === 'yellow' && color !== 'green') {
+                break;
+            }
             elem.style.backgroundColor = color;
             break;
         }
@@ -38,6 +43,11 @@ function deleteLetter() {
     nextLetter -= 1;
 }
 
+function checkValidity() {
+    const word = currentGuess.join('');
+    return WORDS.includes(word);
+}
+
 function checkGuess() {
     const row = document.getElementsByClassName('letter-row')[6 - guessesRemaining];
     let guessString = '';
@@ -45,6 +55,11 @@ function checkGuess() {
 
     for (const val of currentGuess) {
         guessString += val;
+    }
+
+    if (!checkValidity()) {
+        alert('Invalid word!');
+        return;
     }
 
     if (guessString.length !== WORD_LENGTH) {
