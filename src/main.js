@@ -27,6 +27,11 @@ function initBoard() {
 function shadeKeyBoard(letter, color) {
     for (const elem of document.getElementsByClassName('keyboard-button')) {
         if (elem.textContent === letter) {
+            if (elem.style.backgroundColor === 'green') {
+                break;
+            } else if (elem.style.backgroundColor === 'yellow' && color !== 'green') {
+                break;
+            }
             elem.style.backgroundColor = color;
             break;
         }
