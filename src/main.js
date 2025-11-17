@@ -99,10 +99,9 @@ function checkGuess() {
     if (guessString === rightGuessString) {
         if (guessesRemaining === 1) {
             guessesRemaining = 0;
-        } else {
-            alert('You guessed right! Game over!');
-            return;
         }
+        alert('You guessed right! Game over!');
+        return;
     }
 
     guessesRemaining -= 1;
