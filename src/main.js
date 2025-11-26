@@ -7,6 +7,8 @@ let currentGuess = [];
 let nextLetter = 0;
 const rightGuessString = WORDS[Math.floor(Math.random() * WORDS.length)];
 
+console.log(rightGuessString);
+
 function initBoard() {
     const board = document.getElementById('game-board');
 
@@ -41,6 +43,11 @@ function shadeKeyBoard(letter, color) {
 function deleteLetter() {
     currentGuess.pop();
     nextLetter -= 1;
+    const row = document.getElementsByClassName('letter-row')[6 - guessesRemaining];
+    const box = row.children[nextLetter];
+    console.log(box);
+    box.textContent = '';
+    box.classList.remove('filled-box');
 }
 
 function checkValidity() {
@@ -151,6 +158,7 @@ document.addEventListener('keyup', e => {
     const pressedKey = String(e.key);
     if (pressedKey === 'Backspace' && nextLetter !== 0) {
         deleteLetter();
+
         return;
     }
 
