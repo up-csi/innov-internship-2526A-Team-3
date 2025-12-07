@@ -4,6 +4,7 @@ const NUMBER_OF_GUESSES = 16;
 const WORD_LENGTH = 5;
 let guessesRemaining = NUMBER_OF_GUESSES;
 let burn_count = 0;
+let burnt_tiles = NUMBER_OF_GUESSES - 1;
 let currentGuess = [];
 let nextLetter = 0;
 const rightGuessString = WORDS[Math.floor(Math.random() * WORDS.length)];
@@ -138,7 +139,8 @@ function checkGuess() {
         alert(`The right word was: "${rightGuessString}"`);
         guessesRemaining = 0;
     }
-    console.log(burn_guesses)
+
+    burn_rows()
 }
 
 function insertLetter(pressedKey) {
@@ -153,6 +155,28 @@ function insertLetter(pressedKey) {
     box.classList.add('filled-box');
     currentGuess.push(pressedKey);
     nextLetter += 1;
+}
+
+function burn_rows(){
+    for (let i = burnt_tiles; i >= NUMBER_OF_GUESSES - burn_count; i--)
+    {
+        const row = document.getElementsByClassName('letter-row')[i]
+        
+        for (let j = 0; j < WORD_LENGTH; j++) 
+        {
+        const letterColor = "red";
+        const box = row.children[j];
+        
+        const delay = 35 * j;
+        setTimeout(() => {
+                box.style.backgroundColor = letterColor;
+                shadeKeyBoard('', letterColor);
+            }, delay);
+        }
+
+    }
+    console.log(burnt_tiles)
+    burnt_tiles = i
 }
 
 document.addEventListener('keyup', e => {
