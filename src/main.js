@@ -50,14 +50,13 @@ function deleteLetter() {
     box.classList.remove('filled-box');
 }
 
-
 function checkValidity() {
     const word = currentGuess.join('');
     return WORDS.includes(word);
 }
 
 function checkGuess() {
-    let burn_guesses = 0
+    let burn_guesses = 0;
     const row = document.getElementsByClassName('letter-row')[NUMBER_OF_GUESSES - guessesRemaining];
     let guessString = '';
     const rightGuess = Array.from(rightGuessString);
@@ -140,7 +139,7 @@ function checkGuess() {
         guessesRemaining = 0;
     }
 
-    burn_rows()
+    burn_rows();
 }
 
 function insertLetter(pressedKey) {
@@ -157,26 +156,23 @@ function insertLetter(pressedKey) {
     nextLetter += 1;
 }
 
-function burn_rows(){
-    for (let i = burnt_tiles; i >= NUMBER_OF_GUESSES - burn_count; i--)
-    {
-        const row = document.getElementsByClassName('letter-row')[i]
-        
-        for (let j = 0; j < WORD_LENGTH; j++) 
-        {
-        const letterColor = "red";
-        const box = row.children[j];
-        
-        const delay = 35 * j;
-        setTimeout(() => {
+function burn_rows() {
+    for (let i = burnt_tiles; i >= NUMBER_OF_GUESSES - burn_count; i--) {
+        const row = document.getElementsByClassName('letter-row')[i];
+
+        for (let j = 0; j < WORD_LENGTH; j++) {
+            const letterColor = 'red';
+            const box = row.children[j];
+
+            const delay = 35 * j;
+            setTimeout(() => {
                 box.style.backgroundColor = letterColor;
                 shadeKeyBoard('', letterColor);
             }, delay);
         }
-
     }
-    console.log(burnt_tiles)
-    burnt_tiles = i
+    console.log(burnt_tiles);
+    burnt_tiles = i;
 }
 
 document.addEventListener('keyup', e => {
