@@ -1,8 +1,10 @@
 import { WORDS } from './words.js';
 
-const NUMBER_OF_GUESSES = 6;
+const NUMBER_OF_GUESSES = 16;
 const WORD_LENGTH = 5;
 let guessesRemaining = NUMBER_OF_GUESSES;
+let burn_count = 0;
+let burnt_tiles = NUMBER_OF_GUESSES - 1;
 let currentGuess = [];
 let nextLetter = 0;
 const rightGuessString = WORDS[Math.floor(Math.random() * WORDS.length)];
@@ -41,6 +43,11 @@ function shadeKeyBoard(letter, color) {
 function deleteLetter() {
     currentGuess.pop();
     nextLetter -= 1;
+    const row = document.getElementsByClassName('letter-row')[NUMBER_OF_GUESSES - guessesRemaining];
+    const box = row.children[nextLetter];
+    console.log(box);
+    box.textContent = '';
+    box.classList.remove('filled-box');
 }
 
 function checkValidity() {
@@ -49,7 +56,8 @@ function checkValidity() {
 }
 
 function checkGuess() {
-    const row = document.getElementsByClassName('letter-row')[6 - guessesRemaining];
+    let burn_guesses = 0;
+    const row = document.getElementsByClassName('letter-row')[NUMBER_OF_GUESSES - guessesRemaining];
     let guessString = '';
     const rightGuess = Array.from(rightGuessString);
 
@@ -94,6 +102,7 @@ function checkGuess() {
                 currentGuessLetterColors[i] = 'yellow';
                 letterCount[currentGuess[i]]--;
             } else {
+                burn_guesses++;
                 currentGuessLetterColors[i] = 'grey';
             }
         }
@@ -120,13 +129,17 @@ function checkGuess() {
     }
 
     guessesRemaining -= 1;
+    burn_count += burn_guesses;
     currentGuess = [];
     nextLetter = 0;
 
-    if (guessesRemaining <= 0) {
+    if (guessesRemaining <= burn_count) {
         alert("You've run out of guesses! Game over!");
         alert(`The right word was: "${rightGuessString}"`);
+        guessesRemaining = 0;
     }
+
+    burn_rows();
 }
 
 function insertLetter(pressedKey) {
@@ -135,12 +148,31 @@ function insertLetter(pressedKey) {
     }
     pressedKey = pressedKey.toLowerCase();
 
-    const row = document.getElementsByClassName('letter-row')[6 - guessesRemaining];
+    const row = document.getElementsByClassName('letter-row')[NUMBER_OF_GUESSES - guessesRemaining];
     const box = row.children[nextLetter];
     box.textContent = pressedKey;
     box.classList.add('filled-box');
     currentGuess.push(pressedKey);
     nextLetter += 1;
+}
+
+function burn_rows() {
+    for (let i = burnt_tiles; i >= NUMBER_OF_GUESSES - burn_count; i--) {
+        const row = document.getElementsByClassName('letter-row')[i];
+
+        for (let j = 0; j < WORD_LENGTH; j++) {
+            const letterColor = 'red';
+            const box = row.children[j];
+
+            const delay = 35 * j;
+            setTimeout(() => {
+                box.style.backgroundColor = letterColor;
+                shadeKeyBoard('', letterColor);
+            }, delay);
+        }
+    }
+    console.log(burnt_tiles);
+    burnt_tiles = i;
 }
 
 document.addEventListener('keyup', e => {
